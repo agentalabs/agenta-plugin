@@ -1,0 +1,45 @@
+{
+  "name": "superteam-brasil",
+  "owner": {
+    "name": "Superteam Brasil",
+    "email": "dev@superteam.fun",
+    "url": "https://superteam.fun"
+  },
+  "metadata": {
+    "description": "Complete Solana development stack for Claude Code. MCPs, plugins, skills, and agents bundled together.",
+    "version": "1.0.0",
+    "repository": "https://github.com/superteam-brasil/agenta",
+    "license": "MIT",
+    "keywords": [
+      "solana",
+      "anchor",
+      "metaplex",
+      "helius",
+      "web3",
+      "blockchain",
+      "defi",
+      "nft"
+    ]
+  },
+  "plugins": [
+    {
+      "name": "agenta",
+      "source": "./plugins/agenta",
+      "description": "Complete Solana development stack: 9 MCPs, 8 plugins, skills, agents, and commands for blockchain development",
+      "version": "1.0.0",
+      "author": {
+        "name": "Superteam Brasil",
+        "email": "dev@superteam.fun"
+      },
+      "keywords": [
+        "solana",
+        "anchor",
+        "helius",
+        "metaplex",
+        "web3",
+        "security",
+        "audit"
+      ]
+    }
+  ]
+}
