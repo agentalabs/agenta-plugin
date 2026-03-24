@@ -1,0 +1,14 @@
+{
+  "name": "blockchain",
+  "description": "Solana blockchain development with Helius RPC, social media, documentation, and container sandboxes.",
+  "extends": "core",
+  "mcps": ["claude-context", "mcpdoc", "omnisearch", "daytona", "helius", "twitter"],
+  "skills": ["solana-development"],
+  "env_required": ["HELIUS_API_KEY", "OPENAI_API_KEY"],
+  "env_optional": ["ZILLIZ_API_KEY", "TAVILY_API_KEY", "EXA_API_KEY", "PERPLEXITY_API_KEY", "TWITTER_API_KEY", "TWITTER_API_SECRET", "TWITTER_ACCESS_TOKEN", "TWITTER_ACCESS_TOKEN_SECRET"],
+  "mcpdoc_urls": [
+    "Solana:https://solana.com/llms.txt",
+    "Helius:https://www.helius.dev/llms.txt",
+    "Jupiter:https://dev.jup.ag/llms.txt"
+  ]
+}

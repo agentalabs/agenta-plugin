@@ -1,0 +1,34 @@
+# Agenta Plugin
+
+> Modular MCP plugin collection for Claude Code. Pick a profile, get a curated set of MCP servers and skills.
+
+## Profiles
+
+- core: Essential MCPs (sandbox, memory, reasoning, HTTP)
+- knowledge-base: RAG pipelines, vector search, document management
+- research: Multi-source search, scraping, synthesis
+- web-dev: Full-stack development with browser automation
+- blockchain: Solana development with Helius, Jupiter, Twitter
+- full: Everything combined
+
+## Quick Start
+
+    bash install.sh
+
+Or copy a template:
+
+    cp templates/core.mcp.json .mcp.json
+
+## Repository
+
+- profiles/ - Profile manifests defining MCP and skill composition
+- mcps/ - Individual MCP server configurations
+- skills/ - Skill markdown files with YAML frontmatter
+- templates/ - Ready-to-copy .mcp.json files
+- docs/ - Extended documentation (guide.md for use cases and user flows)
+
+## Links
+
+- Repository: https://github.com/superteam-brasil/agenta
+- MCP Protocol: https://modelcontextprotocol.io
+- Claude Code: https://claude.ai/code

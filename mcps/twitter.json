@@ -1,0 +1,11 @@
+{
+  "command": "npx",
+  "args": ["-y", "@mbelinky/x-mcp-server"],
+  "env": {
+    "API_KEY": "${TWITTER_API_KEY}",
+    "API_SECRET_KEY": "${TWITTER_API_SECRET}",
+    "ACCESS_TOKEN": "${TWITTER_ACCESS_TOKEN}",
+    "ACCESS_TOKEN_SECRET": "${TWITTER_ACCESS_TOKEN_SECRET}"
+  },
+  "description": "Twitter/X automation: post, search, engage"
+}

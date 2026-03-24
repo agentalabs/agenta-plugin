@@ -1,0 +1,10 @@
+{
+  "name": "knowledge-base",
+  "description": "Build and manage knowledge bases with vector search, file operations, structured storage, and web scraping.",
+  "extends": "core",
+  "mcps": ["claude-context", "qdrant", "filesystem", "sqlite", "mcpdoc", "crawl4ai", "supabase", "postgres"],
+  "skills": ["knowledge-base"],
+  "env_required": ["OPENAI_API_KEY"],
+  "env_optional": ["ZILLIZ_API_KEY", "QDRANT_URL", "QDRANT_API_KEY", "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY", "POSTGRES_URL"],
+  "mcpdoc_urls": []
+}

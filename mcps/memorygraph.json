@@ -1,0 +1,4 @@
+{
+  "command": "memorygraph",
+  "description": "Knowledge graph with SQLite default, supports Neo4j backend"
+}

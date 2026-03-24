@@ -1,0 +1,10 @@
+{
+  "name": "web-dev",
+  "description": "Full-stack web development with browser automation, testing, search, and container sandboxes.",
+  "extends": "core",
+  "mcps": ["mcpdoc", "omnisearch", "context7", "playwright-mcp", "puppeteer", "daytona", "supabase", "postgres"],
+  "skills": ["web-development"],
+  "env_required": [],
+  "env_optional": ["TAVILY_API_KEY", "EXA_API_KEY", "PERPLEXITY_API_KEY", "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY", "POSTGRES_URL"],
+  "mcpdoc_urls": []
+}

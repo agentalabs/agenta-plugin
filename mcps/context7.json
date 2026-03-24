@@ -1,0 +1,5 @@
+{
+  "command": "npx",
+  "args": ["-y", "@upstash/context7-mcp"],
+  "description": "Live documentation lookup for popular libraries and frameworks"
+}

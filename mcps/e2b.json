@@ -1,0 +1,8 @@
+{
+  "command": "npx",
+  "args": ["-y", "@e2b/mcp-server"],
+  "env": {
+    "E2B_API_KEY": "${E2B_API_KEY}"
+  },
+  "description": "Cloud sandboxed code execution for TypeScript and Python"
+}

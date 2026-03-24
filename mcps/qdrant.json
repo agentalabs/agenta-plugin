@@ -1,0 +1,9 @@
+{
+  "command": "npx",
+  "args": ["-y", "qdrant-mcp-server"],
+  "env": {
+    "QDRANT_URL": "${QDRANT_URL}",
+    "QDRANT_API_KEY": "${QDRANT_API_KEY}"
+  },
+  "description": "Vector database for embeddings, similarity search, and RAG pipelines"
+}

@@ -1,0 +1,5 @@
+{
+  "command": "npx",
+  "args": ["-y", "sqlite-mcp"],
+  "description": "Local SQLite database operations for structured data storage"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "core",
+  "description": "Essential MCP servers for any project. Sandbox execution, knowledge graph, structured reasoning, and HTTP requests.",
+  "mcps": ["e2b", "memorygraph", "sequential-thinking", "fetch"],
+  "skills": ["autonomous-agent"],
+  "env_required": ["E2B_API_KEY"],
+  "env_optional": []
+}

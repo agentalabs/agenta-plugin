@@ -1,0 +1,14 @@
+{
+  "name": "full",
+  "description": "All MCP servers and skills combined. Maximum capability for complex multi-domain projects.",
+  "extends": "core",
+  "mcps": ["claude-context", "qdrant", "filesystem", "sqlite", "mcpdoc", "crawl4ai", "omnisearch", "context7", "notion", "playwright-mcp", "puppeteer", "daytona", "helius", "twitter", "clickup", "supabase", "postgres"],
+  "skills": ["knowledge-base", "research", "autonomous-agent", "solana-development", "web-development"],
+  "env_required": ["E2B_API_KEY", "OPENAI_API_KEY", "HELIUS_API_KEY"],
+  "env_optional": ["ZILLIZ_API_KEY", "QDRANT_URL", "QDRANT_API_KEY", "TAVILY_API_KEY", "EXA_API_KEY", "PERPLEXITY_API_KEY", "NOTION_TOKEN", "TWITTER_API_KEY", "TWITTER_API_SECRET", "TWITTER_ACCESS_TOKEN", "TWITTER_ACCESS_TOKEN_SECRET", "SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY", "POSTGRES_URL"],
+  "mcpdoc_urls": [
+    "Solana:https://solana.com/llms.txt",
+    "Helius:https://www.helius.dev/llms.txt",
+    "Jupiter:https://dev.jup.ag/llms.txt"
+  ]
+}

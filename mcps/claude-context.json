@@ -1,0 +1,9 @@
+{
+  "command": "npx",
+  "args": ["-y", "@zilliz/claude-context-mcp@latest"],
+  "env": {
+    "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+    "MILVUS_TOKEN": "${ZILLIZ_API_KEY}"
+  },
+  "description": "Vector search + semantic codebase search with 40% token reduction"
+}

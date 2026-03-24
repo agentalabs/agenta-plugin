@@ -134,7 +134,7 @@ Before deployment, verify:
    ```rust
    // ❌ BAD
    let result = a + b;
-   
+
    // ✅ GOOD
    let result = a.checked_add(b).ok_or(ErrorCode::Overflow)?;
    ```
@@ -237,7 +237,7 @@ describe('my-program', () => {
 
   it('Initializes account', async () => {
     const myAccount = anchor.web3.Keypair.generate();
-    
+
     await program.methods
       .initialize()
       .accounts({
@@ -308,7 +308,7 @@ use anchor_lang::solana_program::program::invoke_signed;
 pub fn cpi_example(ctx: Context<CpiExample>, bump: u8) -> Result<()> {
     let seeds = &[b"authority".as_ref(), &[bump]];
     let signer_seeds = &[&seeds[..]];
-    
+
     invoke_signed(
         &instruction,
         &[ctx.accounts.target_program.to_account_info()],
@@ -321,7 +321,7 @@ pub fn cpi_example(ctx: Context<CpiExample>, bump: u8) -> Result<()> {
 ## Resources
 
 - **Solana Docs**: Use `mcpdoc` → Solana
-- **Helius Docs**: Use `mcpdoc` → Helius  
+- **Helius Docs**: Use `mcpdoc` → Helius
 - **Jupiter Docs**: Use `mcpdoc` → Jupiter
 - **Anchor Book**: https://book.anchor-lang.com
 - **Metaplex Docs**: Use Context7 plugin

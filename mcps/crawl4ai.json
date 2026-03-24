@@ -1,0 +1,5 @@
+{
+  "command": "docker",
+  "args": ["run", "--rm", "-i", "uysalsadi/crawl4ai-mcp-server:latest"],
+  "description": "Free, self-hosted web scraping with anti-bot handling"
+}

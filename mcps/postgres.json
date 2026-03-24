@@ -1,0 +1,8 @@
+{
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-postgres"],
+  "env": {
+    "POSTGRES_URL": "${POSTGRES_URL}"
+  },
+  "description": "Direct PostgreSQL database operations and queries"
+}

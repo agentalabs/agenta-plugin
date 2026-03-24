@@ -1,44 +1,45 @@
 {
-  "name": "superteam-brasil",
+  "name": "agenta-plugin",
   "owner": {
     "name": "Superteam Brasil",
     "email": "dev@superteam.fun",
     "url": "https://superteam.fun"
   },
   "metadata": {
-    "description": "Complete Solana development stack for Claude Code. MCPs, plugins, skills, and agents bundled together.",
-    "version": "1.0.0",
+    "description": "Modular MCP plugin collection for Claude Code. 18 MCP servers, 6 profiles, 5 skills — pick a profile and go.",
+    "version": "2.0.0",
     "repository": "https://github.com/superteam-brasil/agenta",
     "license": "MIT",
     "keywords": [
-      "solana",
-      "anchor",
-      "metaplex",
-      "helius",
-      "web3",
+      "mcp",
+      "claude-code",
+      "plugin",
+      "modular",
+      "knowledge-base",
+      "research",
+      "web-dev",
       "blockchain",
-      "defi",
-      "nft"
+      "solana",
+      "autonomous-agent"
     ]
   },
   "plugins": [
     {
-      "name": "agenta",
-      "source": "./plugins/agenta",
-      "description": "Complete Solana development stack: 9 MCPs, 8 plugins, skills, agents, and commands for blockchain development",
-      "version": "1.0.0",
+      "name": "agenta-plugin",
+      "source": ".",
+      "description": "Modular MCP plugin collection with 6 profiles: core, knowledge-base, research, web-dev, blockchain, full",
+      "version": "2.0.0",
       "author": {
         "name": "Superteam Brasil",
         "email": "dev@superteam.fun"
       },
       "keywords": [
-        "solana",
-        "anchor",
-        "helius",
-        "metaplex",
-        "web3",
-        "security",
-        "audit"
+        "mcp",
+        "modular",
+        "profiles",
+        "knowledge-base",
+        "research",
+        "blockchain"
       ]
     }
   ]

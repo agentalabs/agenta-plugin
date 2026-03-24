@@ -1,0 +1,8 @@
+{
+  "command": "npx",
+  "args": ["-y", "@dcspark/mcp-server-helius"],
+  "env": {
+    "HELIUS_API_KEY": "${HELIUS_API_KEY}"
+  },
+  "description": "Solana blockchain data: balances, transactions, assets, Jupiter swaps"
+}

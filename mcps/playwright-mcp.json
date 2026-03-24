@@ -1,0 +1,5 @@
+{
+  "command": "npx",
+  "args": ["-y", "@playwright/mcp"],
+  "description": "Browser automation for testing, scraping, and interaction"
+}

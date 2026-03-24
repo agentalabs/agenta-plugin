@@ -1,7 +1,7 @@
 {
-  "name": "agenta",
-  "version": "1.0.0",
-  "description": "Complete Solana development stack for Claude Code. Bundles 9 MCP servers, 8 plugins, specialized skills for Anchor/Metaplex development, and security auditing agents.",
+  "name": "agenta-plugin",
+  "version": "2.0.0",
+  "description": "Modular MCP plugin collection for Claude Code. Choose a profile to get a curated set of MCP servers and skills optimized for knowledge bases, research, web development, blockchain, or general-purpose autonomous agent workflows.",
   "author": {
     "name": "Superteam Brasil",
     "email": "dev@superteam.fun",
@@ -14,59 +14,26 @@
     "url": "https://github.com/superteam-brasil/agenta.git"
   },
   "keywords": [
-    "solana",
-    "anchor",
-    "metaplex",
-    "helius",
-    "jupiter",
-    "web3",
+    "mcp",
+    "claude-code",
+    "plugin",
+    "knowledge-base",
+    "research",
+    "web-dev",
     "blockchain",
-    "defi",
-    "nft",
-    "security",
-    "audit",
-    "mcp"
+    "solana",
+    "autonomous-agent",
+    "rag",
+    "vector-search"
   ],
   "engines": {
     "claude-code": ">=1.0.33"
   },
-  "dependencies": {
-    "plugins": [
-      "context7@claude-plugins-official",
-      "github@claude-plugins-official",
-      "chrome-devtools-mcp@claude-plugins-official",
-      "playwright@claude-plugins-official",
-      "firecrawl@claude-plugins-official",
-      "building-secure-contracts@trailofbits-skills",
-      "compound-engineering@compound-engineering"
-    ],
-    "marketplaces": [
-      {
-        "name": "claude-plugins-official",
-        "source": "github",
-        "repo": "anthropics/claude-plugins-official"
-      },
-      {
-        "name": "trailofbits-skills",
-        "source": "github",
-        "repo": "trailofbits/skills"
-      },
-      {
-        "name": "compound-engineering",
-        "source": "github",
-        "repo": "EveryInc/compound-engineering-plugin"
-      },
-      {
-        "name": "openclaw-skills",
-        "source": "github",
-        "repo": "openclaw/skills"
-      }
-    ]
-  },
+  "profiles": ["core", "knowledge-base", "research", "web-dev", "blockchain", "full"],
   "capabilities": {
-    "mcpServers": 9,
-    "skills": 2,
-    "agents": 2,
-    "commands": 5
+    "mcpServers": 21,
+    "profiles": 6,
+    "skills": 5,
+    "templates": 6
   }
 }

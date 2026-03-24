@@ -1,0 +1,10 @@
+{
+  "command": "npx",
+  "args": ["-y", "mcp-omnisearch"],
+  "env": {
+    "TAVILY_API_KEY": "${TAVILY_API_KEY}",
+    "EXA_API_KEY": "${EXA_API_KEY}",
+    "PERPLEXITY_API_KEY": "${PERPLEXITY_API_KEY}"
+  },
+  "description": "Unified search across Tavily, Exa, and Perplexity"
+}

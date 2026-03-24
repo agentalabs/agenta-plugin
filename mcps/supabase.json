@@ -1,0 +1,9 @@
+{
+  "command": "npx",
+  "args": ["-y", "@supabase/mcp-server-supabase"],
+  "env": {
+    "SUPABASE_URL": "${SUPABASE_URL}",
+    "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}"
+  },
+  "description": "Supabase integration: database, auth, storage, and edge functions"
+}

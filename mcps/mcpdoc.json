@@ -1,0 +1,5 @@
+{
+  "command": "uvx",
+  "args": ["--from", "mcpdoc", "mcpdoc"],
+  "description": "Documentation lookup via llms.txt endpoints. Pass --urls flags to configure sources."
+}

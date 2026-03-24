@@ -1,0 +1,5 @@
+{
+  "command": "daytona",
+  "args": ["mcp", "serve"],
+  "description": "Container-based sandbox with full Rust/TypeScript support"
+}
