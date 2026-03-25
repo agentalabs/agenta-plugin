@@ -28,7 +28,7 @@ print_header() {
 print_profiles() {
     echo -e "${YELLOW}Available profiles:${NC}"
     echo ""
-    echo "  1) core            - Essential MCPs (sandbox, memory, reasoning, HTTP)"
+    echo "  1) core            - Essential MCPs (sandbox, memory, context mode)"
     echo "  2) knowledge-base  - RAG pipelines, vector search, document management"
     echo "  3) research        - Multi-source search, scraping, synthesis"
     echo "  4) web-dev         - Full-stack development with browser automation"
@@ -39,7 +39,8 @@ print_profiles() {
 
 select_profile() {
     local choice
-    read -rp "Select a profile [1-6]: " choice
+    read -rp "Select a profile [1-6] (default: 6 - full): " choice
+    choice="${choice:-6}"
     case "$choice" in
         1) PROFILE="core" ;;
         2) PROFILE="knowledge-base" ;;
@@ -52,6 +53,14 @@ select_profile() {
             exit 1
             ;;
     esac
+}
+
+init_submodules() {
+    if [ -f "$SCRIPT_DIR/.gitmodules" ]; then
+        echo -e "${YELLOW}Initializing git submodules...${NC}"
+        (cd "$SCRIPT_DIR" && git submodule update --init --recursive 2>/dev/null) || \
+            echo -e "${YELLOW}Warning: Could not init submodules. External skills may be unavailable.${NC}"
+    fi
 }
 
 copy_template() {
@@ -109,13 +118,54 @@ for s in skills:
     mkdir -p "$target_skills_dir"
     while IFS= read -r skill; do
         local skill_file="$SKILLS_DIR/${skill}.md"
+        # Map skill names to submodule directory names
+        local dir_name="$skill"
+        case "$skill" in
+            solana-ecosystem) dir_name="sendai" ;;
+            security)         dir_name="trailofbits" ;;
+        esac
+        local skill_dir="$SKILLS_DIR/${dir_name}"
+
         if [ -f "$skill_file" ]; then
+            # Internal skill: copy the .md file
             cp "$skill_file" "$target_skills_dir/"
             echo -e "${GREEN}  Copied skill: ${skill}.md${NC}"
+        elif [ -d "$skill_dir" ]; then
+            # Submodule skill: copy entire directory
+            cp -r "$skill_dir" "$target_skills_dir/${dir_name}"
+            echo -e "${GREEN}  Copied skill: ${dir_name}/ (submodule, skill: ${skill})${NC}"
         else
-            echo -e "${YELLOW}  Skill not found: ${skill}.md (skipped)${NC}"
+            echo -e "${YELLOW}  Skill not found: ${skill} (submodule may not be initialized)${NC}"
         fi
     done <<< "$skills"
+
+    # Generate merged SKILL.md in target
+    generate_skill_index "$target_skills_dir" "$skills"
+}
+
+generate_skill_index() {
+    local target_skills_dir="$1"
+    local skills="$2"
+    local index_file="$target_skills_dir/SKILL.md"
+
+    cat > "$index_file" << 'SKILL_HEADER'
+# Skills Index
+
+Auto-generated index of installed skills.
+
+## Installed Skills
+
+SKILL_HEADER
+
+    while IFS= read -r skill; do
+        if [ -f "$target_skills_dir/${skill}.md" ]; then
+            echo "- **${skill}**: [./${skill}.md](./${skill}.md)" >> "$index_file"
+        elif [ -d "$target_skills_dir/${skill}" ]; then
+            echo "- **${skill}**: [./${skill}/](./${skill}/)" >> "$index_file"
+        fi
+    done <<< "$skills"
+
+    echo -e "${GREEN}  Generated skills/SKILL.md index${NC}"
 }
 
 generate_claude_md() {
@@ -133,19 +183,28 @@ This project uses Agenta Plugin. The `.mcp.json` file configures which MCP serve
 
 ## Tool Usage Priority
 
-When completing tasks, prefer MCP tools over manual approaches:
+When completing tasks, use the best tool available — native Claude Code tools are often sufficient:
 
-| Need | Use | Not |
-|------|-----|-----|
-| Look up library docs | Context7 or mcpdoc | Guessing from training data |
-| Search the web | Omnisearch | Telling the user to search |
-| Store structured data | SQLite, Supabase, or Postgres | Flat files |
-| Store embeddings | Qdrant or Claude Context | Re-computing every time |
-| Track entities & relations | MemoryGraph | Unstructured notes |
-| Run untrusted code | E2B or Daytona sandbox | Directly on the host |
-| Fetch URLs | Fetch MCP | curl via shell |
-| Scrape web pages | Crawl4AI | Manual copy-paste |
-| Complex reasoning | Sequential Thinking | Long unstructured chains |
+| Need | Best tool | When to escalate |
+|------|-----------|-----------------|
+| Look up library docs | Context7 or mcpdoc | — |
+| Simple web search | WebSearch (native) | Omnisearch for multi-engine research |
+| Fetch a URL | WebFetch (native) | Crawl4AI for anti-bot sites, Puppeteer for JS-rendered pages |
+| Read/write/edit files | Read, Write, Edit (native) | — |
+| Search file contents | Grep, Glob (native) | — |
+| Store structured data | SQLite, Supabase, or Postgres | — |
+| Store embeddings | Qdrant or Claude Context | — |
+| Track entities & relations | MemoryGraph | — |
+| Run untrusted code | E2B or Daytona sandbox | — |
+| Scrape web pages | Crawl4AI | Puppeteer for JS-rendered pages |
+| Search academic papers | Consensus | — |
+| Manage context window | Context Mode | — |
+| Persistent cross-session memory | Memsearch | — |
+| Ingest sources into KB | Skill Seekers | — |
+
+## Important
+
+Always clarify with the user if something is unclear before proceeding.
 
 ## Knowledge Base Maintenance
 
@@ -210,8 +269,33 @@ for r in reqs:
     fi
 }
 
+check_dependencies() {
+    echo ""
+    echo -e "${YELLOW}Checking optional dependencies:${NC}"
+
+    # Check memsearch
+    if command -v memsearch &>/dev/null; then
+        echo -e "  ${GREEN}✓ memsearch${NC} - installed"
+    else
+        echo -e "  ${YELLOW}! memsearch${NC} - not found (install with: pip install memsearch)"
+    fi
+
+    # Check skill-seekers
+    if command -v skill-seekers &>/dev/null; then
+        echo -e "  ${GREEN}✓ skill-seekers${NC} - installed"
+    else
+        echo -e "  ${YELLOW}! skill-seekers${NC} - not found (install with: pip install skill-seekers)"
+    fi
+
+    # Check context-mode (npx-based, just note it)
+    echo -e "  ${GREEN}✓ context-mode${NC} - runs via npx (no install needed)"
+}
+
 main() {
     print_header
+
+    # Initialize submodules if available
+    init_submodules
 
     # Allow profile to be passed as second argument
     if [ -n "${2:-}" ]; then
@@ -248,6 +332,9 @@ main() {
 
     # Step 4: Check environment variables
     check_env_vars
+
+    # Step 5: Check optional dependencies
+    check_dependencies
 
     echo ""
     echo -e "${GREEN}Installation complete!${NC}"

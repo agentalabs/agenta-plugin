@@ -4,7 +4,7 @@ import pytest
 
 from conftest import (
     ROOT, PROFILES, ALL_MCP_NAMES, ALL_SKILL_NAMES,
-    PROFILE_MATRIX, PROFILE_SKILLS, load_json,
+    PROFILE_MATRIX, PROFILE_SKILLS, SUBMODULE_SKILLS, load_json,
 )
 
 PROFILES_DIR = ROOT / "profiles"
@@ -108,12 +108,17 @@ class TestProfileReferences:
                 f"Profile {name} references non-existent MCP '{mcp}'"
             )
 
-    def test_skills_reference_existing_files(self, profile_data):
+    def test_skills_reference_existing_resources(self, profile_data):
+        """Skills can be internal .md files or submodule directories."""
         name, data = profile_data
         for skill in data["skills"]:
-            path = SKILLS_DIR / f"{skill}.md"
-            assert path.exists(), (
-                f"Profile {name} references non-existent skill '{skill}'"
+            md_path = SKILLS_DIR / f"{skill}.md"
+            # Check if it's a submodule skill mapped to a directory
+            dir_name = SUBMODULE_SKILLS.get(skill, skill)
+            dir_path = SKILLS_DIR / dir_name
+            assert md_path.exists() or dir_path.exists(), (
+                f"Profile {name} references non-existent skill '{skill}' "
+                f"(checked {skill}.md and {dir_name}/)"
             )
 
 

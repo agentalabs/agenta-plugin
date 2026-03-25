@@ -1,5 +1,0 @@
-{
-  "command": "npx",
-  "args": ["-y", "@tokenizin/mcp-npx-fetch"],
-  "description": "HTTP requests with configurable headers and response parsing"
-}

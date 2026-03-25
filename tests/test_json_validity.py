@@ -9,10 +9,16 @@ from conftest import ROOT, load_json
 
 
 def _find_json_files():
-    """Yield all JSON files excluding .git and .claude dirs."""
+    """Yield all JSON files excluding .git, .claude, and submodule dirs."""
+    submodule_dirs = {"solana-foundation", "sendai", "trailofbits", "cloudflare", "superpowers"}
     for p in ROOT.rglob("*.json"):
         if ".git" in p.parts or ".claude" in p.parts:
             continue
+        # Exclude files inside skill submodules
+        if "skills" in p.parts:
+            rel_parts = p.relative_to(ROOT / "skills").parts
+            if rel_parts and rel_parts[0] in submodule_dirs:
+                continue
         yield p
 
 

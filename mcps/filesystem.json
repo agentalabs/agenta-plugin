@@ -1,5 +1,0 @@
-{
-  "command": "npx",
-  "args": ["-y", "@modelcontextprotocol/server-filesystem"],
-  "description": "Secure file operations with configurable allowed directories"
-}

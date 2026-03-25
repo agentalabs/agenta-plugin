@@ -6,7 +6,10 @@ from pathlib import Path
 
 import pytest
 
-from conftest import ROOT, PROFILES, ALL_MCP_NAMES, ALL_SKILL_NAMES, load_json
+from conftest import (
+    ROOT, PROFILES, ALL_MCP_NAMES, ALL_SKILL_NAMES,
+    INTERNAL_SKILL_NAMES, SUBMODULE_SKILLS, load_json,
+)
 
 
 class TestNoOrphanedMcps:
@@ -25,24 +28,33 @@ class TestNoOrphanedMcps:
 
         fragments = {p.stem for p in (ROOT / "mcps").glob("*.json")}
 
-        # context7 is used in templates but doesn't have a fragment — skip
         orphaned = fragments - referenced
-        # Allow context7 to only exist in templates
         assert not orphaned, (
             f"MCP fragments not referenced by any profile: {orphaned}"
         )
 
 
 class TestNoOrphanedSkills:
-    """Every skill file should be referenced by at least one profile."""
+    """Every internal skill file should be referenced by at least one profile."""
 
-    def test_all_skills_used(self):
+    def test_all_internal_skills_used(self):
         referenced = set()
         for profile_name in PROFILES:
             data = load_json(ROOT / "profiles" / f"{profile_name}.json")
             referenced.update(data["skills"])
 
-        skill_files = {p.stem for p in (ROOT / "skills").glob("*.md")}
+        # Add base profile skills
+        for profile_name in PROFILES:
+            data = load_json(ROOT / "profiles" / f"{profile_name}.json")
+            if "extends" in data:
+                base = load_json(ROOT / "profiles" / f"{data['extends']}.json")
+                referenced.update(base["skills"])
+
+        # Only check internal .md files (not submodules or SKILL.md)
+        skill_files = {
+            p.stem for p in (ROOT / "skills").glob("*.md")
+            if p.stem != "SKILL"
+        }
         orphaned = skill_files - referenced
         assert not orphaned, (
             f"Skill files not referenced by any profile: {orphaned}"
@@ -93,14 +105,7 @@ class TestPluginJsonAccuracy:
 
     def test_mcp_count(self):
         plugin = load_json(ROOT / "plugin.json")
-        # Count distinct MCPs across all templates
-        all_mcps = set()
-        for p in (ROOT / "templates").glob("*.mcp.json"):
-            data = load_json(p)
-            all_mcps.update(data["mcpServers"].keys())
-
-        # context7 may not be in mcps/ but is in templates — count from templates
-        assert plugin["capabilities"]["mcpServers"] >= len(all_mcps) - 1
+        assert plugin["capabilities"]["mcpServers"] == len(ALL_MCP_NAMES)
 
     def test_profile_count(self):
         plugin = load_json(ROOT / "plugin.json")
@@ -109,8 +114,7 @@ class TestPluginJsonAccuracy:
 
     def test_skill_count(self):
         plugin = load_json(ROOT / "plugin.json")
-        actual = len(list((ROOT / "skills").glob("*.md")))
-        assert plugin["capabilities"]["skills"] == actual
+        assert plugin["capabilities"]["skills"] == len(ALL_SKILL_NAMES)
 
     def test_template_count(self):
         plugin = load_json(ROOT / "plugin.json")
@@ -124,7 +128,13 @@ class TestOldFilesRemoved:
     def test_old_skill_md_removed(self):
         """The old SKILL.md should have been deleted (moved to skills/)."""
         assert not (ROOT / "SKILL.md").exists(), (
-            "Legacy SKILL.md should be removed — content moved to skills/solana-development.md"
+            "Legacy SKILL.md should be removed — content moved to skills/"
+        )
+
+    def test_old_solana_removed(self):
+        """Old solana-development.md should not exist in skills/ root."""
+        assert not (ROOT / "skills" / "solana-development.md").exists(), (
+            "solana-development.md was replaced by solana-foundation submodule"
         )
 
 

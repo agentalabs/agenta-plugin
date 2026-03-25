@@ -1,0 +1,5 @@
+{
+  "command": "memsearch",
+  "args": ["serve"],
+  "description": "Persistent markdown-first memory with hybrid vector + BM25 search across sessions"
+}

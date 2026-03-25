@@ -10,13 +10,9 @@
     "memorygraph": {
       "command": "memorygraph"
     },
-    "sequential-thinking": {
+    "context-mode": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-    },
-    "fetch": {
-      "command": "npx",
-      "args": ["-y", "@tokenizin/mcp-npx-fetch"]
+      "args": ["-y", "context-mode"]
     },
     "claude-context": {
       "command": "npx",
@@ -59,6 +55,14 @@
         "ACCESS_TOKEN": "${TWITTER_ACCESS_TOKEN}",
         "ACCESS_TOKEN_SECRET": "${TWITTER_ACCESS_TOKEN_SECRET}"
       }
+    },
+    "memsearch": {
+      "command": "memsearch",
+      "args": ["serve"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
     }
   }
 }

@@ -13,53 +13,74 @@ PROFILES = ["core", "knowledge-base", "research", "web-dev", "blockchain", "full
 # The canonical profile → MCP composition matrix from the design doc.
 PROFILE_MATRIX = {
     "core": {
-        "e2b", "memorygraph", "sequential-thinking", "fetch",
+        "e2b", "memorygraph", "context-mode",
     },
     "knowledge-base": {
-        "e2b", "memorygraph", "sequential-thinking", "fetch",
-        "claude-context", "qdrant", "filesystem", "sqlite", "mcpdoc", "crawl4ai",
-        "supabase", "postgres",
+        "e2b", "memorygraph", "context-mode",
+        "claude-context", "qdrant", "sqlite", "mcpdoc", "crawl4ai",
+        "supabase", "postgres", "memsearch", "skill-seekers",
     },
     "research": {
-        "e2b", "memorygraph", "sequential-thinking", "fetch",
+        "e2b", "memorygraph", "context-mode",
         "mcpdoc", "crawl4ai", "omnisearch", "context7", "notion", "puppeteer",
+        "memsearch", "consensus",
     },
     "web-dev": {
-        "e2b", "memorygraph", "sequential-thinking", "fetch",
-        "mcpdoc", "omnisearch", "context7", "playwright-mcp", "puppeteer", "daytona",
-        "supabase", "postgres",
+        "e2b", "memorygraph", "context-mode",
+        "mcpdoc", "omnisearch", "context7", "puppeteer", "daytona",
+        "supabase", "postgres", "memsearch", "crawl4ai",
     },
     "blockchain": {
-        "e2b", "memorygraph", "sequential-thinking", "fetch",
+        "e2b", "memorygraph", "context-mode",
         "claude-context", "mcpdoc", "omnisearch", "daytona", "helius", "twitter",
+        "memsearch", "context7",
     },
 }
-# full = union of all + clickup
+# full = union of all + clickup + skill-seekers
 PROFILE_MATRIX["full"] = set()
 for _mcps in PROFILE_MATRIX.values():
     PROFILE_MATRIX["full"] |= _mcps
 PROFILE_MATRIX["full"].add("clickup")
+PROFILE_MATRIX["full"].add("skill-seekers")
 
 PROFILE_SKILLS = {
     "core": {"autonomous-agent"},
     "knowledge-base": {"autonomous-agent", "knowledge-base"},
     "research": {"autonomous-agent", "research"},
-    "web-dev": {"autonomous-agent", "web-development"},
-    "blockchain": {"autonomous-agent", "solana-development"},
-    "full": {"knowledge-base", "research", "autonomous-agent", "solana-development", "web-development"},
+    "web-dev": {"autonomous-agent", "superpowers", "cloudflare"},
+    "blockchain": {"autonomous-agent", "solana-foundation", "solana-ecosystem", "security"},
+    "full": {"knowledge-base", "research", "autonomous-agent", "superpowers",
+             "solana-foundation", "solana-ecosystem", "security", "cloudflare"},
 }
 
 ALL_MCP_NAMES = sorted({
     "e2b", "daytona", "omnisearch", "helius", "memorygraph", "twitter",
-    "crawl4ai", "mcpdoc", "claude-context", "clickup", "filesystem",
-    "sqlite", "qdrant", "sequential-thinking", "fetch", "notion",
-    "playwright-mcp", "puppeteer", "context7", "supabase", "postgres",
+    "crawl4ai", "mcpdoc", "claude-context", "clickup",
+    "sqlite", "qdrant", "notion",
+    "consensus", "puppeteer", "context7", "supabase", "postgres",
+    "context-mode", "memsearch", "skill-seekers",
 })
 
-ALL_SKILL_NAMES = sorted({
+# Internal skills are .md files directly in skills/
+# Submodule skills are directories in skills/
+INTERNAL_SKILL_NAMES = sorted({
     "autonomous-agent", "knowledge-base", "research",
-    "solana-development", "web-development",
 })
+
+# All skill names referenced by profiles (internal + submodule-based)
+ALL_SKILL_NAMES = sorted({
+    "autonomous-agent", "knowledge-base", "research", "superpowers",
+    "solana-foundation", "solana-ecosystem", "security", "cloudflare",
+})
+
+# Submodule skill names map to directories
+SUBMODULE_SKILLS = {
+    "solana-foundation": "solana-foundation",
+    "solana-ecosystem": "sendai",
+    "security": "trailofbits",
+    "cloudflare": "cloudflare",
+    "superpowers": "superpowers",
+}
 
 
 @pytest.fixture

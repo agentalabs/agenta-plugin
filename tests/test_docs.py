@@ -129,7 +129,7 @@ class TestGuide:
 
     def test_explains_mcp_tool_usage(self, guide):
         """Guide should explain which MCP tools are used in each flow."""
-        for mcp in ["Omnisearch", "Crawl4AI", "MemoryGraph", "Helius", "Playwright", "Qdrant"]:
+        for mcp in ["Omnisearch", "Crawl4AI", "MemoryGraph", "Helius", "Puppeteer", "Qdrant"]:
             assert mcp in guide, (
                 f"Guide should mention {mcp} in a use case flow"
             )

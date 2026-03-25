@@ -13,9 +13,9 @@ class TestPluginJson:
     def plugin(self):
         return load_json(ROOT / "plugin.json")
 
-    def test_version_is_2(self, plugin):
-        assert plugin["version"].startswith("2."), (
-            "plugin.json should be version 2.x after the modular rewrite"
+    def test_version_is_3(self, plugin):
+        assert plugin["version"].startswith("3."), (
+            "plugin.json should be version 3.x after the submodule architecture"
         )
 
     def test_has_required_fields(self, plugin):
@@ -28,7 +28,7 @@ class TestPluginJson:
 
     def test_capabilities_accurate(self, plugin):
         caps = plugin["capabilities"]
-        assert caps["mcpServers"] >= len(ALL_MCP_NAMES) - 1  # context7 only in templates
+        assert caps["mcpServers"] == len(ALL_MCP_NAMES)
         assert caps["profiles"] == len(PROFILES)
         assert caps["skills"] == len(ALL_SKILL_NAMES)
         assert caps["templates"] == len(PROFILES)
@@ -44,6 +44,8 @@ class TestPluginJson:
         kw = set(plugin.get("keywords", []))
         assert "mcp" in kw
         assert "knowledge-base" in kw or "research" in kw
+        assert "security" in kw
+        assert "cloudflare" in kw
 
 
 class TestMarketplaceJson:
@@ -51,9 +53,6 @@ class TestMarketplaceJson:
     @pytest.fixture
     def marketplace(self):
         return load_json(ROOT / "marketplace.json")
-
-    def test_version_is_2(self, marketplace):
-        assert marketplace["metadata"]["version"].startswith("2.")
 
     def test_has_plugins_array(self, marketplace):
         assert "plugins" in marketplace
@@ -82,6 +81,17 @@ class TestClaudeMd:
 
     def test_mentions_skills(self, claude_md):
         assert "skill" in claude_md.lower()
+
+    def test_has_clarify_instruction(self, claude_md):
+        assert "clarify" in claude_md.lower(), (
+            "CLAUDE.md should contain 'always clarify' instruction"
+        )
+
+    def test_mentions_context_mode(self, claude_md):
+        assert "Context Mode" in claude_md or "context-mode" in claude_md.lower()
+
+    def test_mentions_memsearch(self, claude_md):
+        assert "Memsearch" in claude_md or "memsearch" in claude_md.lower()
 
 
 class TestReadme:
@@ -112,6 +122,9 @@ class TestReadme:
 
     def test_has_install_instructions(self, readme):
         assert "install.sh" in readme
+
+    def test_mentions_submodules(self, readme):
+        assert "submodule" in readme.lower()
 
     def test_references_existing_docs(self, readme):
         """Any doc links should point to files that exist."""

@@ -38,7 +38,7 @@ For reference material, see:
 
 ```bash
 # Clone the plugin repo
-git clone https://github.com/superteam-brasil/agenta.git agenta-plugin
+git clone https://github.com/agenta-labs/agenta-plugin.git agenta-plugin
 
 # Run the interactive installer pointing at your project
 bash agenta-plugin/install.sh /path/to/my-project
@@ -109,7 +109,7 @@ You: I have markdown files in docs/ that I want to ingest into the knowledge bas
 ```
 
 Claude will use:
-- **Filesystem** to read your document files
+- Claude Code's native file access to read your document files
 - **E2B** to run a chunking script in a sandbox
 - **Qdrant** to store the embedded chunks
 - **SQLite** to maintain a document registry tracking what's been ingested
@@ -135,7 +135,7 @@ You: Analyze the ingested documents and build a knowledge graph of the key
 
 Claude will use:
 - **MemoryGraph** to create entities (concepts, documents, people) and relationships
-- **Sequential Thinking** to reason about concept hierarchies
+- Structured reasoning to analyze concept hierarchies
 
 ### Step 5: Query the knowledge base
 
@@ -213,10 +213,10 @@ Claude will execute this flow:
 
 | Source type | How it fetches | Change detection | Tools |
 |-------------|---------------|------------------|-------|
-| **rss** | Parse feed XML | Compare entry GUIDs/dates against last_sync | **Fetch** |
-| **api** | GET with `?updated_since=last_sync` | Pagination cursor or timestamp filter | **Fetch** |
+| **rss** | Parse feed XML | Compare entry GUIDs/dates against last_sync | **WebFetch** |
+| **api** | GET with `?updated_since=last_sync` | Pagination cursor or timestamp filter | **WebFetch** |
 | **webpage** | Full page scrape | Hash page content, compare to last_hash | **Crawl4AI** |
-| **file** | Read from disk | File modification time + content hash | **Filesystem** |
+| **file** | Read from disk | File modification time + content hash | **Native file access** |
 | **database** | Query `WHERE updated_at > last_sync` | Row count + content hash | **Supabase** or **Postgres** |
 
 **3. Process new content**
@@ -329,8 +329,7 @@ Claude will:
 2. **Omnisearch** (Exa) — semantic search for technical deep-dives
 3. **Crawl4AI** — scrape the most relevant comparison articles for full content
 4. **Context7** — pull documentation for specific databases (Qdrant, Chroma, Weaviate, etc.)
-5. **Sequential Thinking** — structure the comparison framework
-6. **MemoryGraph** — store findings as entities with relationships for follow-up
+5. **MemoryGraph** — store findings as entities with relationships for follow-up
 
 ### Step 3: Deep dive on candidates
 
@@ -393,17 +392,17 @@ You: Add a user authentication system using NextAuth.js with GitHub and
 Claude will:
 - **Context7** — pull NextAuth.js docs
 - **Omnisearch** — search for integration patterns and known issues
-- Write the code following patterns from the **web-development** skill
+- Write the code following patterns from the **superpowers** skill
 
 ### Step 4: Test with browser automation
 
 ```
-You: Write Playwright tests for the login flow — test both GitHub and
+You: Write browser tests for the login flow — test both GitHub and
      Google OAuth, plus the error case when auth is denied.
 ```
 
 Claude will:
-- **Playwright MCP** — automate the browser to run through the OAuth flows
+- **Puppeteer** — automate the browser to run through the OAuth flows
 - **E2B** — run the test scripts in a sandbox
 - Verify screenshots and assertions
 
@@ -454,8 +453,8 @@ You: Create an Anchor program for a token staking vault. Users deposit SPL
 Claude will:
 - **mcpdoc** — fetch Solana, Helius, and Jupiter documentation via llms.txt
 - **Claude Context** — search the codebase for existing patterns
-- Apply the **solana-development** skill for Anchor best practices, PDA patterns, and security checklist
-- **Sequential Thinking** — reason through the account structure and reward math
+- Apply the **solana-foundation** and **solana-ecosystem** skills for Anchor best practices, PDA patterns, and security checklist
+- Structured reasoning to work through the account structure and reward math
 
 ### Step 3: Query on-chain data
 
@@ -483,7 +482,7 @@ Claude will:
 You: Audit the staking program for common Solana vulnerabilities.
 ```
 
-Claude will apply the security checklist from the solana-development skill: integer overflow, signer validation, account ownership, PDA bump validation, and close-account safety.
+Claude will apply the **security** skill (Trail of Bits) checklist: integer overflow, signer validation, account ownership, PDA bump validation, and close-account safety.
 
 ### Step 6: Social media announcement
 
@@ -517,7 +516,7 @@ You: Refactor the payment processing module. It currently handles Stripe
 ```
 
 Claude will:
-- **Sequential Thinking** — break the refactoring into phases, evaluate design options
+- Structured reasoning to break the refactoring into phases, evaluate design options
 - **MemoryGraph** — store the architectural decisions for future reference
 - **E2B** — test each refactoring step in a sandbox before applying
 
@@ -537,7 +536,7 @@ Claude will query **MemoryGraph** to retrieve the stored decisions, progress, an
 You: Check if PayPal's API has changed their webhook signature format recently.
 ```
 
-Claude will use **Fetch** to hit the PayPal developer docs endpoint and parse the response.
+Claude will use **WebFetch** (native) to hit the PayPal developer docs endpoint and parse the response.
 
 ---
 
@@ -556,7 +555,7 @@ Use the `full` profile when your project genuinely needs tools from 3+ domains. 
 bash agenta-plugin/install.sh ./complex-project full
 ```
 
-The full profile includes all 19 MCP servers and all 5 skills. Set environment variables for the MCPs you actually need — servers with missing credentials will fail gracefully.
+The full profile includes all 21 MCP servers and all 8 skills. Set environment variables for the MCPs you actually need — servers with missing credentials will fail gracefully.
 
 ### Typical flow
 
@@ -564,7 +563,7 @@ A DeFi dashboard project might use tools from multiple domains in a single sessi
 
 1. **Research** phase — Omnisearch + Crawl4AI to study competitor dashboards
 2. **Blockchain** phase — Helius to query on-chain data, mcpdoc for Solana docs
-3. **Web dev** phase — Playwright to test the dashboard UI, Context7 for React docs
+3. **Web dev** phase — Puppeteer to test the dashboard UI, Context7 for React docs
 4. **Knowledge base** phase — Qdrant to store user-facing help content
 
 ---
@@ -619,7 +618,7 @@ Create `profiles/my-profile.json`:
   "name": "my-profile",
   "description": "Data engineering with research and storage capabilities.",
   "extends": "core",
-  "mcps": ["omnisearch", "crawl4ai", "sqlite", "qdrant", "filesystem"],
+  "mcps": ["omnisearch", "crawl4ai", "sqlite", "qdrant"],
   "skills": ["research", "knowledge-base"],
   "env_required": ["TAVILY_API_KEY"],
   "env_optional": ["QDRANT_URL", "QDRANT_API_KEY"],

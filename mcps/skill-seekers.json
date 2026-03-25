@@ -1,0 +1,4 @@
+{
+  "command": "skill-seekers",
+  "description": "Transforms source types into structured AI knowledge for ingestion pipelines"
+}

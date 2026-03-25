@@ -1,5 +1,0 @@
-{
-  "command": "npx",
-  "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
-  "description": "Structured step-by-step reasoning for complex problem decomposition"
-}

@@ -4,7 +4,7 @@
 
 ## Profiles
 
-- core: Essential MCPs (sandbox, memory, reasoning, HTTP)
+- core: Essential MCPs (sandbox, memory graph, context mode)
 - knowledge-base: RAG pipelines, vector search, document management
 - research: Multi-source search, scraping, synthesis
 - web-dev: Full-stack development with browser automation
@@ -29,6 +29,6 @@ Or copy a template:
 
 ## Links
 
-- Repository: https://github.com/superteam-brasil/agenta
+- Repository: https://github.com/agenta-labs/agenta-plugin
 - MCP Protocol: https://modelcontextprotocol.io
 - Claude Code: https://claude.ai/code

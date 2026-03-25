@@ -71,8 +71,6 @@ class TestTemplateConfigConsistency:
         for mcp_name, mcp_config in data["mcpServers"].items():
             fragment_path = MCPS_DIR / f"{mcp_name}.json"
             if not fragment_path.exists():
-                # context7 doesn't have its own fragment file — it's referenced
-                # but only appears in templates. Skip if missing.
                 continue
 
             fragment = load_json(fragment_path)

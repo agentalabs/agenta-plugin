@@ -10,13 +10,9 @@
     "memorygraph": {
       "command": "memorygraph"
     },
-    "sequential-thinking": {
+    "context-mode": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-    },
-    "fetch": {
-      "command": "npx",
-      "args": ["-y", "@tokenizin/mcp-npx-fetch"]
+      "args": ["-y", "context-mode"]
     },
     "mcpdoc": {
       "command": "uvx",
@@ -34,10 +30,6 @@
     "context7": {
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp"]
-    },
-    "playwright-mcp": {
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp"]
     },
     "puppeteer": {
       "command": "npx",
@@ -61,6 +53,14 @@
       "env": {
         "POSTGRES_URL": "${POSTGRES_URL}"
       }
+    },
+    "memsearch": {
+      "command": "memsearch",
+      "args": ["serve"]
+    },
+    "crawl4ai": {
+      "command": "docker",
+      "args": ["run", "--rm", "-i", "uysalsadi/crawl4ai-mcp-server:latest"]
     }
   }
 }

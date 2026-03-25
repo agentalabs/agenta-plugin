@@ -1,17 +1,15 @@
 {
   "name": "agenta-plugin",
-  "version": "2.0.0",
-  "description": "Modular MCP plugin collection for Claude Code. Choose a profile to get a curated set of MCP servers and skills optimized for knowledge bases, research, web development, blockchain, or general-purpose autonomous agent workflows.",
+  "version": "3.0.0",
+  "description": "Modular MCP plugin collection for Claude Code. Choose a profile to get a curated set of MCP servers and skills optimized for knowledge bases, research, web development, blockchain, or general-purpose autonomous agent workflows. Includes external skill submodules from Solana Foundation, SendAI, Trail of Bits, Cloudflare, and Superpowers.",
   "author": {
-    "name": "Superteam Brasil",
-    "email": "dev@superteam.fun",
-    "url": "https://superteam.fun"
+    "name": "Kaue Cano"
   },
   "license": "MIT",
-  "homepage": "https://github.com/superteam-brasil/agenta",
+  "homepage": "https://github.com/agenta-labs/agenta-plugin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/superteam-brasil/agenta.git"
+    "url": "https://github.com/agenta-labs/agenta-plugin.git"
   },
   "keywords": [
     "mcp",
@@ -23,8 +21,11 @@
     "blockchain",
     "solana",
     "autonomous-agent",
+    "superpowers",
     "rag",
-    "vector-search"
+    "vector-search",
+    "security",
+    "cloudflare"
   ],
   "engines": {
     "claude-code": ">=1.0.33"
@@ -33,7 +34,7 @@
   "capabilities": {
     "mcpServers": 21,
     "profiles": 6,
-    "skills": 5,
+    "skills": 8,
     "templates": 6
   }
 }

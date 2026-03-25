@@ -28,13 +28,20 @@ Complete reference for all MCP servers available in Agenta Plugin.
 - **Command**: Docker container `uysalsadi/crawl4ai-mcp-server:latest`
 - **Purpose**: Free, self-hosted web scraping with anti-bot handling
 - **Env**: none (requires Docker)
-- **Profiles**: knowledge-base, research
+- **Profiles**: knowledge-base, research, web-dev
 
 ### context7
 - **Package**: `@upstash/context7-mcp`
 - **Purpose**: Live documentation lookup for popular libraries
 - **Env**: none
-- **Profiles**: research, web-dev
+- **Profiles**: research, web-dev, blockchain
+
+### consensus
+- **Type**: HTTP MCP
+- **URL**: `https://mcp.consensus.app/mcp`
+- **Purpose**: Academic paper search across 200M+ peer-reviewed papers via Consensus
+- **Env**: none
+- **Profiles**: research, full
 
 ## Documentation
 
@@ -71,37 +78,27 @@ Complete reference for all MCP servers available in Agenta Plugin.
 - **Env**: `OPENAI_API_KEY`, `ZILLIZ_API_KEY` (optional)
 - **Profiles**: knowledge-base, blockchain
 
-## Reasoning
+## Context & Memory
 
-### sequential-thinking
-- **Package**: `@modelcontextprotocol/server-sequential-thinking`
-- **Purpose**: Structured step-by-step reasoning
+### context-mode
+- **Package**: `context-mode`
+- **Purpose**: Sandbox tool outputs to prevent context bloat with up to 98% token reduction
 - **Env**: none
 - **Profiles**: all
 
-## Network
+### memsearch
+- **Command**: `memsearch serve`
+- **Purpose**: Persistent markdown-first memory with hybrid vector + BM25 search across sessions
+- **Env**: none (requires `pip install memsearch`)
+- **Profiles**: knowledge-base, research, web-dev, blockchain
 
-### fetch
-- **Package**: `@tokenizin/mcp-npx-fetch`
-- **Purpose**: HTTP requests with configurable headers
-- **Env**: none
-- **Profiles**: all
-
-## File System
-
-### filesystem
-- **Package**: `@modelcontextprotocol/server-filesystem`
-- **Purpose**: Secure file operations with allowed directories
-- **Env**: none
+### skill-seekers
+- **Command**: `skill-seekers`
+- **Purpose**: Transforms source types into structured AI knowledge for ingestion pipelines
+- **Env**: none (requires `pip install skill-seekers`)
 - **Profiles**: knowledge-base
 
 ## Browser Automation
-
-### playwright-mcp
-- **Package**: `@playwright/mcp`
-- **Purpose**: Browser automation for testing and scraping
-- **Env**: none
-- **Profiles**: web-dev
 
 ### puppeteer
 - **Package**: `@modelcontextprotocol/server-puppeteer`

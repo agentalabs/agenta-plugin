@@ -4,20 +4,28 @@ This project uses Agenta Plugin. The `.mcp.json` file configures which MCP serve
 
 ## Tool Usage Priority
 
-When completing tasks, prefer MCP tools over manual approaches:
+When completing tasks, use the best tool available — native Claude Code tools are often sufficient:
 
-| Need | Use | Not |
-|------|-----|-----|
-| Look up library docs | Context7 or mcpdoc | Guessing from training data |
-| Search the web | Omnisearch | Telling the user to search |
-| Read/write files | Filesystem MCP | Shell commands when avoidable |
-| Store structured data | SQLite, Supabase, or Postgres | Flat files |
-| Store embeddings | Qdrant or Claude Context | Re-computing every time |
-| Track entities & relations | MemoryGraph | Unstructured notes |
-| Run untrusted code | E2B or Daytona sandbox | Directly on the host |
-| Fetch URLs | Fetch MCP | curl via shell |
-| Scrape web pages | Crawl4AI | Manual copy-paste |
-| Complex reasoning | Sequential Thinking | Long unstructured chains |
+| Need | Best tool | When to escalate |
+|------|-----------|-----------------|
+| Look up library docs | Context7 or mcpdoc | — |
+| Simple web search | WebSearch (native) | Omnisearch for multi-engine research |
+| Fetch a URL | WebFetch (native) | Crawl4AI for anti-bot sites, Puppeteer for JS-rendered pages |
+| Read/write/edit files | Read, Write, Edit (native) | — |
+| Search file contents | Grep, Glob (native) | — |
+| Store structured data | SQLite, Supabase, or Postgres | — |
+| Store embeddings | Qdrant or Claude Context | — |
+| Track entities & relations | MemoryGraph | — |
+| Run untrusted code | E2B or Daytona sandbox | — |
+| Scrape web pages | Crawl4AI | Puppeteer for JS-rendered pages |
+| Search academic papers | Consensus | — |
+| Manage context window | Context Mode | — |
+| Persistent cross-session memory | Memsearch | — |
+| Ingest sources into KB | Skill Seekers | — |
+
+## Important
+
+Always clarify with the user if something is unclear before proceeding.
 
 ## Knowledge Base Maintenance
 
@@ -61,9 +69,8 @@ Before each run, verify:
 Skills in `skills/` auto-apply based on file patterns. They provide domain-specific patterns for:
 - **autonomous-agent**: Task planning, memory, self-correction, maintenance workflows
 - **knowledge-base**: RAG pipelines, ingestion, vector search, automated sync
-- **research**: Multi-source search and synthesis
-- **web-development**: Frontend/backend/testing patterns
-- **solana-development**: Anchor, Metaplex, DeFi
+- **research**: Multi-source search, synthesis, academic papers, cross-session memory
+- **superpowers**: TDD, systematic debugging, code review, planning, git worktrees
 
 ## Environment
 

@@ -10,13 +10,9 @@
     "memorygraph": {
       "command": "memorygraph"
     },
-    "sequential-thinking": {
+    "context-mode": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-    },
-    "fetch": {
-      "command": "npx",
-      "args": ["-y", "@tokenizin/mcp-npx-fetch"]
+      "args": ["-y", "context-mode"]
     }
   }
 }

@@ -2,7 +2,7 @@
   "name": "research",
   "description": "Multi-source research with web search, scraping, documentation lookup, and note-taking.",
   "extends": "core",
-  "mcps": ["mcpdoc", "crawl4ai", "omnisearch", "context7", "notion", "puppeteer"],
+  "mcps": ["mcpdoc", "crawl4ai", "omnisearch", "context7", "notion", "puppeteer", "memsearch", "consensus"],
   "skills": ["research"],
   "env_required": ["TAVILY_API_KEY"],
   "env_optional": ["EXA_API_KEY", "PERPLEXITY_API_KEY", "NOTION_TOKEN"],

@@ -1,14 +1,12 @@
 {
   "name": "agenta-plugin",
   "owner": {
-    "name": "Superteam Brasil",
-    "email": "dev@superteam.fun",
-    "url": "https://superteam.fun"
+    "name": "Kaue Cano"
   },
   "metadata": {
-    "description": "Modular MCP plugin collection for Claude Code. 18 MCP servers, 6 profiles, 5 skills — pick a profile and go.",
-    "version": "2.0.0",
-    "repository": "https://github.com/superteam-brasil/agenta",
+    "description": "Modular MCP plugin collection for Claude Code. 21 MCP servers, 6 profiles, 8 skills (including Superpowers, Consensus) — pick a profile and go.",
+    "version": "3.0.0",
+    "repository": "https://github.com/agenta-labs/agenta-plugin",
     "license": "MIT",
     "keywords": [
       "mcp",
@@ -20,7 +18,9 @@
       "web-dev",
       "blockchain",
       "solana",
-      "autonomous-agent"
+      "autonomous-agent",
+      "security",
+      "cloudflare"
     ]
   },
   "plugins": [
@@ -28,10 +28,9 @@
       "name": "agenta-plugin",
       "source": ".",
       "description": "Modular MCP plugin collection with 6 profiles: core, knowledge-base, research, web-dev, blockchain, full",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "author": {
-        "name": "Superteam Brasil",
-        "email": "dev@superteam.fun"
+        "name": "Kaue Cano"
       },
       "keywords": [
         "mcp",

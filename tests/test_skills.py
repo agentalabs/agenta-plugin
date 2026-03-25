@@ -1,26 +1,55 @@
-"""Tests for skill markdown files in skills/."""
+"""Tests for skill files in skills/."""
 
 import re
 
 import pytest
 
-from conftest import ROOT, ALL_SKILL_NAMES
+from conftest import ROOT, INTERNAL_SKILL_NAMES, SUBMODULE_SKILLS
 
 SKILLS_DIR = ROOT / "skills"
 
 
-class TestSkillCompleteness:
+class TestInternalSkillCompleteness:
 
-    @pytest.mark.parametrize("skill_name", ALL_SKILL_NAMES)
+    @pytest.mark.parametrize("skill_name", INTERNAL_SKILL_NAMES)
     def test_skill_exists(self, skill_name):
         path = SKILLS_DIR / f"{skill_name}.md"
         assert path.exists(), f"Missing skill: skills/{skill_name}.md"
 
-    def test_no_extra_skills(self):
-        actual = {p.stem for p in SKILLS_DIR.glob("*.md")}
-        expected = set(ALL_SKILL_NAMES)
+    def test_no_extra_internal_skills(self):
+        actual = {p.stem for p in SKILLS_DIR.glob("*.md") if p.stem != "SKILL"}
+        expected = set(INTERNAL_SKILL_NAMES)
         extra = actual - expected
         assert not extra, f"Unexpected skill files: {extra}"
+
+
+class TestSubmoduleSkills:
+
+    @pytest.mark.parametrize("skill_name,dir_name", list(SUBMODULE_SKILLS.items()))
+    def test_submodule_directory_exists(self, skill_name, dir_name):
+        path = SKILLS_DIR / dir_name
+        assert path.exists(), (
+            f"Missing submodule directory: skills/{dir_name}/ "
+            f"(run: git submodule update --init --recursive)"
+        )
+
+    @pytest.mark.parametrize("skill_name,dir_name", list(SUBMODULE_SKILLS.items()))
+    def test_submodule_has_content(self, skill_name, dir_name):
+        path = SKILLS_DIR / dir_name
+        if path.exists():
+            contents = list(path.iterdir())
+            assert len(contents) > 0, f"Submodule skills/{dir_name}/ is empty"
+
+
+class TestSkillIndex:
+
+    def test_skill_index_exists(self):
+        assert (SKILLS_DIR / "SKILL.md").exists(), "Missing skills/SKILL.md index"
+
+    def test_skill_index_has_content(self):
+        content = (SKILLS_DIR / "SKILL.md").read_text()
+        assert len(content) > 200, "SKILL.md is too short"
+        assert "# Skills Index" in content
 
 
 def _parse_frontmatter(text: str) -> dict:
@@ -52,9 +81,9 @@ def _parse_frontmatter(text: str) -> dict:
 
 
 class TestSkillFrontmatter:
-    """Each skill must have valid YAML frontmatter."""
+    """Each internal skill must have valid YAML frontmatter."""
 
-    @pytest.fixture(params=ALL_SKILL_NAMES)
+    @pytest.fixture(params=INTERNAL_SKILL_NAMES)
     def skill(self, request):
         name = request.param
         path = SKILLS_DIR / f"{name}.md"
@@ -100,9 +129,9 @@ class TestSkillFrontmatter:
 
 
 class TestSkillContent:
-    """Skills should have meaningful content beyond frontmatter."""
+    """Internal skills should have meaningful content beyond frontmatter."""
 
-    @pytest.fixture(params=ALL_SKILL_NAMES)
+    @pytest.fixture(params=INTERNAL_SKILL_NAMES)
     def skill_content(self, request):
         name = request.param
         path = SKILLS_DIR / f"{name}.md"

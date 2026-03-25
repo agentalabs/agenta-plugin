@@ -10,13 +10,9 @@
     "memorygraph": {
       "command": "memorygraph"
     },
-    "sequential-thinking": {
+    "context-mode": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-    },
-    "fetch": {
-      "command": "npx",
-      "args": ["-y", "@tokenizin/mcp-npx-fetch"]
+      "args": ["-y", "context-mode"]
     },
     "claude-context": {
       "command": "npx",
@@ -33,10 +29,6 @@
         "QDRANT_URL": "${QDRANT_URL}",
         "QDRANT_API_KEY": "${QDRANT_API_KEY}"
       }
-    },
-    "filesystem": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem"]
     },
     "sqlite": {
       "command": "npx",
@@ -64,6 +56,13 @@
       "env": {
         "POSTGRES_URL": "${POSTGRES_URL}"
       }
+    },
+    "memsearch": {
+      "command": "memsearch",
+      "args": ["serve"]
+    },
+    "skill-seekers": {
+      "command": "skill-seekers"
     }
   }
 }

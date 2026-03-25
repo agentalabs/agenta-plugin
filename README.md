@@ -2,14 +2,14 @@
 
 Modular MCP plugin collection for Claude Code. Pick a profile, get a curated set of MCP servers and skills optimized for your workflow.
 
-Built by [Superteam Brasil](https://superteam.fun).
+Built by [Kaue Cano](https://github.com/agenta-labs).
 
 ---
 
 ## Quick Start
 
 ```bash
-# Option 1: Interactive installer
+# Option 1: Interactive installer (defaults to "full" profile)
 bash install.sh /path/to/your/project
 
 # Option 2: Copy a template directly
@@ -19,17 +19,19 @@ cp templates/core.mcp.json /path/to/your/project/.mcp.json
 bash install.sh /path/to/your/project research
 ```
 
+> **Note**: If you cloned this repo, run `git submodule update --init --recursive` to fetch external skill repos (Solana Foundation, SendAI, Trail of Bits, Cloudflare, Superpowers).
+
 ---
 
 ## Profiles
 
 | Profile | Use Case | MCP Servers | Key Tools |
 |---------|----------|-------------|-----------|
-| **core** | Any project | 4 | Sandbox, memory, reasoning, HTTP |
-| **knowledge-base** | RAG, document management | 12 | Vector search, file ops, scraping, Supabase, Postgres |
-| **research** | Analysis, reports | 10 | Multi-engine search, scraping, Notion |
-| **web-dev** | Full-stack development | 12 | Browser automation, testing, Supabase, Postgres |
-| **blockchain** | Solana development | 10 | Helius, Jupiter docs, Twitter |
+| **core** | Any project | 3 | Sandbox, memory graph, context mode |
+| **knowledge-base** | RAG, document management | 12 | Vector search, scraping, memsearch, Supabase, Postgres |
+| **research** | Analysis, reports | 11 | Multi-engine search, scraping, academic papers, memsearch, Notion |
+| **web-dev** | Full-stack development | 12 | Browser automation, scraping, memsearch, Supabase, Postgres |
+| **blockchain** | Solana development | 11 | Helius, Jupiter docs, memsearch, context7, Twitter |
 | **full** | Everything | 21 | All MCP servers combined |
 
 See [docs/profiles.md](docs/profiles.md) for detailed profile descriptions and [docs/guide.md](docs/guide.md) for end-to-end user flows.
@@ -42,39 +44,49 @@ See [docs/profiles.md](docs/profiles.md) for detailed profile descriptions and [
 |--------|---------|----------|
 | **e2b** | Cloud sandbox (TS/Python) | all |
 | **memorygraph** | Knowledge graph | all |
-| **sequential-thinking** | Structured reasoning | all |
-| **fetch** | HTTP requests | all |
+| **context-mode** | Context window management (98% token reduction) | all |
 | **claude-context** | Vector search + code semantics | kb, blockchain |
 | **qdrant** | Vector database | kb |
-| **filesystem** | File operations | kb |
 | **sqlite** | Local database | kb |
 | **supabase** | Supabase (DB, auth, storage) | kb, web-dev |
 | **postgres** | Direct PostgreSQL access | kb, web-dev |
 | **mcpdoc** | llms.txt documentation | kb, research, web-dev, blockchain |
-| **crawl4ai** | Web scraping | kb, research |
+| **crawl4ai** | Web scraping | kb, research, web-dev |
 | **omnisearch** | Tavily/Exa/Perplexity | research, web-dev, blockchain |
-| **context7** | Live library docs | research, web-dev |
+| **context7** | Live library docs | research, web-dev, blockchain |
 | **notion** | Notion integration | research |
-| **playwright-mcp** | Browser automation | web-dev |
+| **consensus** | Academic paper search (200M+ papers) | research |
 | **puppeteer** | Headless browser | research, web-dev |
 | **daytona** | Container sandbox | web-dev, blockchain |
 | **helius** | Solana blockchain | blockchain |
 | **twitter** | Twitter/X automation | blockchain |
+| **memsearch** | Persistent memory with hybrid search | kb, research, web-dev, blockchain |
+| **skill-seekers** | Source-to-knowledge ingestion | kb |
 | **clickup** | Task management | full |
 
 See [docs/mcp-catalog.md](docs/mcp-catalog.md) for setup details.
 
 ---
 
-## Skills (5)
+## Skills (8)
+
+### Internal Skills
 
 | Skill | Description | Profiles |
 |-------|-------------|----------|
 | **autonomous-agent** | Task decomposition, memory, self-correction | all |
 | **knowledge-base** | RAG patterns, ingestion workflows | kb |
 | **research** | Multi-source search, synthesis | research |
-| **web-development** | Framework-agnostic web patterns | web-dev |
-| **solana-development** | Anchor, Metaplex, DeFi | blockchain |
+
+### External Skills (Submodules)
+
+| Skill | Source | Description | Profiles |
+|-------|--------|-------------|----------|
+| **solana-foundation** | [Solana Foundation](https://github.com/solana-foundation/solana-dev-skill) | @solana/kit, Anchor, Pinocchio, LiteSVM, Codama | blockchain |
+| **solana-ecosystem** | [SendAI](https://github.com/sendaifun/skills) | Jupiter, Drift, Raydium, Orca, 30+ DeFi protocols | blockchain |
+| **security** | [Trail of Bits](https://github.com/trailofbits/skills) | Static analysis, Semgrep, supply chain, secure contracts | blockchain |
+| **cloudflare** | [Cloudflare](https://github.com/cloudflare/skills) | Workers, Durable Objects, Wrangler, Agents SDK | web-dev |
+| **superpowers** | [obra/superpowers](https://github.com/obra/superpowers) | TDD, debugging, code review, planning, git worktrees | web-dev |
 
 ---
 
@@ -84,7 +96,14 @@ See [docs/mcp-catalog.md](docs/mcp-catalog.md) for setup details.
 agenta-plugin/
 ├── profiles/          # Profile manifests (which MCPs + skills)
 ├── mcps/              # Individual MCP server configs
-├── skills/            # Skill markdown files
+├── skills/            # Skill files and submodules
+│   ├── *.md           # Internal skills
+│   ├── SKILL.md       # Merged skill index
+│   ├── solana-foundation/  # Submodule: Solana Foundation
+│   ├── sendai/             # Submodule: SendAI
+│   ├── trailofbits/        # Submodule: Trail of Bits
+│   ├── cloudflare/         # Submodule: Cloudflare
+│   └── superpowers/        # Submodule: Superpowers
 ├── templates/         # Ready-to-copy .mcp.json files
 ├── docs/              # Extended documentation
 ├── install.sh         # Profile installer script
@@ -120,8 +139,21 @@ Each profile requires different API keys. See [docs/env-vars.md](docs/env-vars.m
 
 The installer copies:
 - `.mcp.json` — MCP server configuration for Claude Code
-- `skills/*.md` — Relevant skill files for your profile
+- `skills/` — Relevant skill files and submodule directories for your profile
+- `skills/SKILL.md` — Generated index of all installed skills
 - `CLAUDE.md` — Agent instructions (if not already present)
+
+---
+
+## Submodules
+
+External skills are tracked as git submodules. To update to latest upstream:
+
+```bash
+git submodule update --remote
+```
+
+If submodules are not initialized, the installer will attempt to init them automatically. If that fails (e.g., no git access), it will warn but continue — internal skills will still work.
 
 ---
 
@@ -158,6 +190,6 @@ MIT License — see [LICENSE](LICENSE)
 
 ## Links
 
-- [Superteam Brasil](https://superteam.fun)
+- [Agenta Labs](https://github.com/agenta-labs/agenta-plugin)
 - [Claude Code](https://claude.ai/code)
 - [MCP Protocol](https://modelcontextprotocol.io)

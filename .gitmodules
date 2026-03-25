@@ -1,0 +1,15 @@
+[submodule "skills/solana-foundation"]
+	path = skills/solana-foundation
+	url = https://github.com/solana-foundation/solana-dev-skill
+[submodule "skills/sendai"]
+	path = skills/sendai
+	url = https://github.com/sendaifun/skills
+[submodule "skills/trailofbits"]
+	path = skills/trailofbits
+	url = https://github.com/trailofbits/skills
+[submodule "skills/cloudflare"]
+	path = skills/cloudflare
+	url = https://github.com/cloudflare/skills
+[submodule "skills/superpowers"]
+	path = skills/superpowers
+	url = https://github.com/obra/superpowers

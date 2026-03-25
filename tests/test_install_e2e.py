@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from conftest import ROOT, PROFILES, PROFILE_MATRIX, PROFILE_SKILLS
+from conftest import ROOT, PROFILES, PROFILE_MATRIX, PROFILE_SKILLS, SUBMODULE_SKILLS
 
 INSTALL_SH = ROOT / "install.sh"
 
@@ -105,26 +105,42 @@ class TestInstallerOutput:
         assert (target / "skills").is_dir()
 
     def test_copies_correct_skills(self, installed):
-        """Skills directory should contain exactly the skills for this profile."""
+        """Skills directory should contain the skills for this profile."""
         profile, target = installed
         skills_dir = target / "skills"
-        actual = {p.stem for p in skills_dir.glob("*.md")}
         expected = PROFILE_SKILLS[profile]
-        assert actual == expected, (
-            f"Installed {profile} skills mismatch.\n"
-            f"  Missing: {expected - actual}\n"
-            f"  Extra:   {actual - expected}"
-        )
 
-    def test_skill_files_are_complete(self, installed):
-        """Copied skill files should not be truncated."""
+        for skill_name in expected:
+            # Internal skill: check for .md file
+            md_path = skills_dir / f"{skill_name}.md"
+            # Submodule skill: check for directory (mapped name)
+            dir_name = SUBMODULE_SKILLS.get(skill_name, skill_name)
+            dir_path = skills_dir / dir_name
+            assert md_path.exists() or dir_path.exists(), (
+                f"Installed {profile}: missing skill '{skill_name}' "
+                f"(checked {skill_name}.md and {dir_name}/)"
+            )
+
+    def test_generates_skill_index(self, installed):
+        """Installer should generate a SKILL.md index in the target."""
+        profile, target = installed
+        index_file = target / "skills" / "SKILL.md"
+        assert index_file.exists(), "Installer should generate skills/SKILL.md"
+        content = index_file.read_text()
+        assert "Skills Index" in content
+
+    def test_internal_skill_files_are_complete(self, installed):
+        """Copied internal skill files should not be truncated."""
         profile, target = installed
         for skill_file in (target / "skills").glob("*.md"):
+            if skill_file.name == "SKILL.md":
+                continue  # Generated file, not a copy
             source = ROOT / "skills" / skill_file.name
-            assert skill_file.stat().st_size == source.stat().st_size, (
-                f"Skill {skill_file.name} appears truncated "
-                f"({skill_file.stat().st_size} vs {source.stat().st_size} bytes)"
-            )
+            if source.exists():
+                assert skill_file.stat().st_size == source.stat().st_size, (
+                    f"Skill {skill_file.name} appears truncated "
+                    f"({skill_file.stat().st_size} vs {source.stat().st_size} bytes)"
+                )
 
 
 class TestInstallerIdempotency:
@@ -172,5 +188,5 @@ class TestInstallerEnvCheck:
             env=env,
             cwd=str(ROOT),
         )
-        # Should show the checkmark (✓) for E2B_API_KEY
+        # Should show the checkmark for E2B_API_KEY
         assert "E2B_API_KEY" in result.stdout
