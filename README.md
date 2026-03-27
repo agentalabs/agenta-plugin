@@ -2,8 +2,6 @@
 
 Modular MCP plugin collection for Claude Code. Pick a profile, get a curated set of MCP servers and skills optimized for your workflow.
 
-Built by [Kaue Cano](https://github.com/agenta-labs).
-
 ---
 
 ## Quick Start
